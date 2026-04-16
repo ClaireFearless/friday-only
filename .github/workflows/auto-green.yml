@@ -1,0 +1,31 @@
+name: Jumat Berkah
+
+on:
+  schedule:
+    # Berjalan setiap hari Jumat jam 02:00 UTC (Sama dengan jam 09:00 WIB)
+    - cron: '0 2 * * 5'
+  workflow_dispatch: # Fitur supaya kamu bisa jalankan manual dari web GitHub kalau mau tes
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Generate 10 Commits
+        run: |
+          for i in {1..10}
+          do
+            echo "Update Jumat ke-$i: $(date)" >> jumat_log.txt
+            git config --local user.email "onymcraft@gmail.com"
+            git config --local user.name "ClaireFearless"
+            git add jumat_log.txt
+            git commit -m "chore: friday routine update part $i"
+          done
+
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
