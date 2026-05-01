@@ -6,6 +6,9 @@ on:
     - cron: '0 2 * * 5'
   workflow_dispatch: # Fitur supaya kamu bisa jalankan manual dari web GitHub kalau mau tes
 
+permissions:
+  contents: write # INI WAJIB DITAMBAHKAN AGAR BOT BISA NGE-PUSH
+
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
@@ -15,11 +18,13 @@ jobs:
 
       - name: Generate 10 Commits
         run: |
+          # Konfigurasi identitas cukup dipanggil sekali di luar loop
+          git config --local user.email "onymcraft@gmail.com"
+          git config --local user.name "ClaireFearless"
+          
           for i in {1..10}
           do
             echo "Update Jumat ke-$i: $(date)" >> jumat_log.txt
-            git config --local user.email "onymcraft@gmail.com"
-            git config --local user.name "ClaireFearless"
             git add jumat_log.txt
             git commit -m "chore: friday routine update part $i"
           done
