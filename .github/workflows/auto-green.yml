@@ -13,24 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Generate Commits
+      - name: Generate 15 commits
         run: |
           git config --local user.email "onymcraft@gmail.com"
           git config --local user.name "ClaireFearless"
 
           for i in {1..15}
           do
-            echo "Update Jumat ke-$i: $(date)" >> jumat_log.txt
-            
-            git add .
-            git commit -m "chore: friday update $i"
+            echo "Update Jumat ke-$i $(date +%s)" >> jumat_log.txt
 
-            sleep 2
+            git add jumat_log.txt
+            git commit -m "commit nomor $i"
+
+            sleep 3
           done
 
-      - name: Push Changes
-        run: |
-          git push
+      - name: Push
+        run: git push
