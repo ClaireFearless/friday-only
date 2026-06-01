@@ -16,12 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Generate 15 commits
+      - name: Generate 20 commits
         run: |
           git config --local user.email "onymcraft@gmail.com"
           git config --local user.name "ClaireFearless"
 
-          for i in {1..15}
+          for i in {1..20}
           do
             echo "Update Jumat ke-$i $(date +%s)" >> jumat_log.txt
 
